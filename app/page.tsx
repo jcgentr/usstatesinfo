@@ -3,10 +3,10 @@ import { states } from "./lib/data";
 
 export default function Home() {
   return (
-    <main>
+    <main className="bg-slate-900 text-white">
       <ul className="grid grid-cols-auto-fit-minmax">
         {states.map((state) => (
-          <li key={state.id} className="w-auto relative group bg-black">
+          <li key={state.id} className="w-auto relative group">
             <div className="relative flex group-hover:opacity-0 justify-center items-center transition-all duration-300 ease-in">
               <Image
                 src={state.imageSrc}
