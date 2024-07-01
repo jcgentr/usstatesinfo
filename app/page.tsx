@@ -1,11 +1,59 @@
+"use client";
+
 import Image from "next/image";
 import { states } from "./lib/data";
+import { useState } from "react";
+import { State } from "./lib/definitions";
+
+const sortByFxns = {
+  name: (a: State, b: State) => a.name.localeCompare(b.name),
+  statehoodDate: (a: State, b: State) =>
+    a.statehoodDate.getTime() - b.statehoodDate.getTime(),
+  capital: (a: State, b: State) => a.capital.localeCompare(b.capital),
+  population: (a: State, b: State) =>
+    parseInt(b.population.replace(/,/g, "")) -
+    parseInt(a.population.replace(/,/g, "")),
+  totalArea: (a: State, b: State) =>
+    parseInt(b.totalArea.replace(/,/g, "")) -
+    parseInt(a.totalArea.replace(/,/g, "")),
+};
 
 export default function Home() {
+  const [sortBy, setSortBy] = useState<
+    "name" | "statehoodDate" | "capital" | "population" | "totalArea"
+  >("name");
+
+  const sortedStates = states.sort(sortByFxns[sortBy]);
+
   return (
     <main className="bg-slate-900 text-white">
+      <div className="p-4 flex items-center">
+        <label htmlFor="sortOptions">Sort by</label>
+        <select
+          id="sortOptions"
+          name="sortOptions"
+          className="ml-4 rounded text-slate-900"
+          value={sortBy}
+          onChange={(e) =>
+            setSortBy(
+              e.currentTarget.value as
+                | "name"
+                | "statehoodDate"
+                | "capital"
+                | "population"
+                | "totalArea"
+            )
+          }
+        >
+          <option value="name">State Name</option>
+          <option value="statehoodDate">Statehood Date</option>
+          <option value="capital">Capital Name</option>
+          <option value="population">Population</option>
+          <option value="totalArea">Total Area</option>
+        </select>
+      </div>
       <ul className="grid grid-cols-auto-fit-minmax">
-        {states.map((state) => (
+        {sortedStates.map((state) => (
           <li key={state.id} className="w-auto relative group">
             <div className="relative flex group-hover:opacity-0 justify-center items-center transition-all duration-300 ease-in">
               <Image
