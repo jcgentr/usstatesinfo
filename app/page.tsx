@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <main className="bg-slate-900 text-white">
-      <div className="p-4 flex justify-between items-center">
+      <div className="p-4 flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
         <div>
           <label htmlFor="sortOptions">Sort by</label>
           <select
